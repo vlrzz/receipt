@@ -67,23 +67,38 @@ def login_user(users):
                 continue
 
 def register_user(users):
+    print('\n-----Регистрация-----')
     while True:
-        print('\n-----Регистрация-----')
-        login = input("Логин: ")
+        login = input("Логин: ").strip()
+        if not login or " " in login:
+            print('Логин не может содержать пробелы или быть пустым!')
+            continue
         if login in users:
             print("Этот логин уже занят. Попробуйте другой.")
             continue
-        password = input("Пароль: ")
-        second_password = input("Второй пароль: ")
-        salt = os.urandom(16).hex()
-        hashed_password = hash_password(password, salt)
-        hashed_second_password = hash_password(second_password, salt)
-        with open(DATABASE_FILE, 'a', encoding='UTF-8') as file:
-            file.write(f"{login}:{salt}:{hashed_password}:{hashed_second_password}\n")
-        print("Регистрация успешна!")
-        input('\n[!] Нажмите ENTER для продолжения')
-        clear_console()
-        return login
+        break
+    while True:
+        password = input("Пароль: ").strip()
+        if not password or " " in password:
+            print('Пароль не может содержать пробелы или быть пустым!')
+            continue
+        break
+    while True:
+        second_password = input("Второй пароль: ").strip()
+        if not second_password or " " in second_password:
+            print('Пароль не может содержать пробелы или быть пустым!')
+            continue
+        break
+
+    salt = os.urandom(16).hex()
+    hashed_password = hash_password(password, salt)
+    hashed_second_password = hash_password(second_password, salt)
+    with open(DATABASE_FILE, 'a', encoding='UTF-8') as file:
+        file.write(f"{login}:{salt}:{hashed_password}:{hashed_second_password}\n")
+    print("Регистрация успешна!")
+    input('\n[!] Нажмите ENTER для продолжения')
+    clear_console()
+    return login
 
 def print_products(products_file):
     try:
