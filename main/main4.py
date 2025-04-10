@@ -153,8 +153,6 @@ def save_receipt(cart, total):
         file.write(f"\n(дополнительная юридическая информация)")
     print(f"\nЧек сохранён в файл: {file_name}")
 
-import os
-
 def load_products(file_name):
     products = {}
     try:
